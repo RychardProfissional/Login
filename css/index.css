@@ -1,10 +1,11 @@
 #header {
   display: flex;
   justify-content: end;
-
+  align-items: center;
   box-sizing: content-box;
+  padding: 10px;
 
-  background-color: rgb(58, 58, 255);
+  background-color: var(--primary-color);
 }
 
 #nav {
@@ -13,7 +14,7 @@
 }
 
 .nav-item {
-  color: white;
+  color: var(--text-light);
   padding: 10px 20px;
   margin: 10px 5px;
 
@@ -28,15 +29,16 @@
 }
 
 .nav-item:hover {
-  background-color: #2a27c8;
+  background-color: var(--tertiary-color);
 }
 
 .nav-item.emphasis {
-  background-color: #1e1eff;
+  background-color: var(--tertiary-color);
+  filter: saturate(150%);
 }
 
 .nav-item.emphasis:hover {
-  background-color: #0000ecdf;
+  filter: saturate(250%);
 }
 
 #main {
@@ -44,37 +46,99 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  flex-grow: 1;
 }
 
 .text {
   margin: 50px;
-  max-width: 400px;
+  max-width: 700px;
 
   text-align: center;
   font-size: 1.7em;
   font-weight: bold;
 }
 
-.technologies_list {
-  width: 300px;
-  color: white;
+.title {
+  margin-bottom: 20px;
+}
+
+.tech_list {
+  width: 400px;
+  padding: 20px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 2px;
+  box-shadow: 3px 3px 8px #0000007f;
+}
+
+.tech_list h3 {
+  color: var(--text-dark);
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.tech_list ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .tech_item {
+  color: var(--text-light);
   display: flex;
   align-items: center;
-  background-color: #6161618b;
-  margin: 5px;
+  background-color: var(--primary-color);
   padding: 5px;
   border-radius: 7px;
   transition: all 0.5s ease;
+  box-shadow: 2px 2px 7px #000000aa;
 }
 
 .tech_item:hover {
-  background-color: rgb(196, 118, 118);
+  scale: 1.01;
 }
 
 .tech_icon {
   margin: 5px 25px 5px 5px;
   width: 48px;
+}
+
+#footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  background-color: var(--primary-dark);
+  height: 150px;
+  color: white;
+}
+
+.contains_social_media {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  margin: 5px;
+  width: 200px;
+}
+
+.contains_social_media a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+}
+
+.contains_social_media .social_media:hover {
+  filter: none;
+  scale: 1.1;
+}
+
+.social_media {
+  filter: grayscale(100%) brightness(50%);
+  transition: all 0.5s ease;
 }

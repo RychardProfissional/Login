@@ -1,10 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;0,800;1,400;1,700;1,800&display=swap");
+
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --tertiary-color: #2980b9;
+  --quaternary-color: #16a085;
+  --text-dark: #2c3e50;
+  --text-light: #ecf0f1;
+  --background-color: #ffffff;
+
+  --primary-color-h: 200;
+  --secondary-color-h: 120;
+  --tertiary-color-h: 210;
+  --quaternary-color-h: 160;
+
+  --primary-light: hsl(var(--primary-color-h), 70%, 80%);
+  --primary-dark: hsl(var(--primary-color-h), 70%, 40%);
+  --secondary-light: hsl(var(--secondary-color-h), 70%, 80%);
+  --secondary-dark: hsl(var(--secondary-color-h), 70%, 40%);
+  --tertiary-light: hsl(var(--tertiary-color-h), 70%, 40%);
+  --tertiary-background: hsl(var(--tertiary-color-h), 80%, 95%);
+  --tertiary-dark: hsl(var(--tertiary-color-h), 70%, 40%);
+  --quaternary-light: hsl(var(--quaternary-color-h), 70%, 80%);
+  --quaternary-dark: hsl(var(--quaternary-color-h), 70%, 40%);
+}
+
 * {
   margin: 0;
   padding: 0;
 
   list-style: none;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 a {
@@ -13,6 +40,13 @@ a {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  background-image: linear-gradient(to right bottom, #e5e5fe, #9290f6);
+  background-color: var(--tertiary-background);
+}
+
+input {
+  border: none;
+  outline: none;
 }

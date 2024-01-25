@@ -1,0 +1,16 @@
+body {
+  align-items: center;
+  justify-content: center;
+}
+
+.main_header {
+  font-weight: bold;
+}
+
+.info_list {
+  margin: 10px;
+  border-radius: 10px;
+  background-color: var(--primary-light);
+  padding: 10px;
+  box-shadow: inset -0px -0px 10px rgba(0, 0, 0, 0.179);
+}
