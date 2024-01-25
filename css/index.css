@@ -1,0 +1,80 @@
+#header {
+  display: flex;
+  justify-content: end;
+
+  box-sizing: content-box;
+
+  background-color: rgb(58, 58, 255);
+}
+
+#nav {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.nav-item {
+  color: white;
+  padding: 10px 20px;
+  margin: 10px 5px;
+
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+
+  transition: 0.5s;
+  border-radius: 5px;
+  font-size: 1.2em;
+}
+
+.nav-item:hover {
+  background-color: #2a27c8;
+}
+
+.nav-item.emphasis {
+  background-color: #1e1eff;
+}
+
+.nav-item.emphasis:hover {
+  background-color: #0000ecdf;
+}
+
+#main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  margin: 50px;
+  max-width: 400px;
+
+  text-align: center;
+  font-size: 1.7em;
+  font-weight: bold;
+}
+
+.technologies_list {
+  width: 300px;
+  color: white;
+}
+
+.tech_item {
+  display: flex;
+  align-items: center;
+  background-color: #6161618b;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 7px;
+  transition: all 0.5s ease;
+}
+
+.tech_item:hover {
+  background-color: rgb(196, 118, 118);
+}
+
+.tech_icon {
+  margin: 5px 25px 5px 5px;
+  width: 48px;
+}

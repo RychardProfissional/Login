@@ -18,5 +18,6 @@
 </head>
 <body>
     PARABENS <?= $username ?>, VOCÊ ESTA LOGADO.
+    <a href="/utilities/logoff.php" rel="noopener noreferrer">realizar logoff</a>
 </body>
 </html>
