@@ -1,6 +1,9 @@
 <?php
     session_start();
-    require_once '../server/actions/actionsUser.php';
+    require_once '../../server/actions/actionsUser.php';
+    require_once '../../server/exception-handling/userExceptions.php';
+
+    $error_name = false;
 
     if(@$_SERVER['REQUEST_METHOD'] === 'POST') {
         $username = $_POST['username'] ?? null;
@@ -8,15 +11,21 @@
 
         if($username && $password){
             try{
-                $_SESSION['id'] = ActionUser::register($username, $password);
+                $_SESSION['id'] = ActionUser::register($username, $password)['id'];
                 $_SESSION['logged'] = true;
                 header('location: /dashboard');
                 exit;
             }
-            catch (Exception $e){
+            catch (UserExceptions $e){
                 session_destroy();
+                $error_code = $e->getCode();
+                echo "<script>alert(".$e->getMessage().")</script>";
             }
         }
+    }
+
+    if (@$error_code === UserExceptions::USER_ALREADY_EXIST) {
+        $error_name = true;
     }
 ?>
 
@@ -28,27 +37,28 @@
     <title>register - Login com php</title>
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/auth.css">
+    <script src="../../js/auth/register.js"></script>
 </head>
 <body>
     <main class="container">
-        <h1 class="title">Register</h1>
+        <h1 class="title">Cadastro</h1>
         <form class="form" action="." method="post">
-            <label class='label' for='username'>    
+            <label class='label <?= $error_name ?? 'error_tmp'?>' for='username'>    
+                <input type='text' class='input input_data' name='username' id='username' required/>
                 <span>Nome: </span>
-                <input type='text' class='input input_data' name='username' id='username'  placeholder='nome de usuário'/>
             </label>
             <label class='label' for='password'>
+                <input type='password' class='input input_data' name='password' id='password' required />
                 <span>Senha: </span>
-                <input type='password' class='input input_data' name='password' id='password'  placeholder='••••••••'/>
             </label>
-            <label class='label' for='password'>
+            <label class='label' for='password_repeat'>
+                <input type='password' class='input input_data' id='password_repeat' required />
                 <span>Senha novamente: </span>
-                <input type='password' class='input input_data' name='password' id='password'  placeholder='••••••••'/>
             </label>
             <input type="submit" class="input input_submit" value="Cadastra-se">
         </form>
         <footer class="container_footer">
-            já possui uma conta? <a href="/login/" class="link">log-in</a>
+            já possui uma conta? <a href="/auth/login/" class="link">log-in</a>
         </footer>
     </main>
 </body>

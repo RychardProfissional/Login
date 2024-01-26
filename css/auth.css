@@ -1,19 +1,23 @@
 body {
   align-items: center;
   justify-content: center;
+  background-image: url("../public/imgs/authBackground.jpg");
+  background-size: cover;
 }
 
 .container {
   padding: 30px;
-  background-color: var(--primary-light);
-  border-radius: 3px;
-  box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.366);
+  background-color: hsla(var(--primary-color-h), 70%, 80%, 30%);
+  border: 2px solid var(--primary-color);
+  backdrop-filter: blur(2px);
+  border-radius: 6px;
+  box-shadow: 2px 2px 8px #00000085;
   width: 450px;
 }
 
 .title {
   letter-spacing: 2px;
-  color: var(--primary-dark);
+  color: black;
 }
 
 .form {
@@ -33,22 +37,52 @@ body {
 
 .label span {
   position: absolute;
+  top: 50%;
+  left: 15px;
 
-  top: 3px;
-  left: 10px;
+  transform: translateY(-50%);
+  transition: all 0.2s ease;
   pointer-events: none;
-  font-size: 0.8em;
   font-weight: bold;
+  color: rgb(52, 52, 52);
+}
+
+.label.error_tmp .input:invalid:not(:focus),
+.label.error .input:not(:focus) {
+  outline-color: red;
 }
 
 .input {
+  color: black;
   border-radius: 10px;
 }
 
 .input_data {
-  padding: 17px 10px 15px 15px;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  outline: 1px solid transparent;
+  background-color: hsl(var(--primary-color-h), 90%, 77%, 30%);
+
+  padding: 17px 10px 15px 15px;
+  transition: all 0.2s ease;
+}
+
+.input:hover {
+  outline-color: var(--primary-light);
+}
+
+.input:focus + span,
+.input:valid + span {
+  top: 3px;
+  left: 10px;
+  font-size: 0.8em;
+  transform: none;
+  color: inherit;
+}
+
+.input_data:focus {
+  outline-color: var(--primary-color);
+  background-color: hsl(var(--primary-color-h), 90%, 77%, 50%);
 }
 
 .input_submit {
@@ -69,10 +103,14 @@ body {
   background-color: hsl(var(--primary-color-h), 90%, 75%);
 }
 
+.container_footer {
+  font-weight: bold;
+}
+
 .container_footer .link {
-  color: var(--text-dark);
+  color: darkblue;
 }
 
 .container_footer .link:hover {
-  color: var(--primary-dark);
+  text-decoration: underline;
 }

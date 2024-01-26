@@ -1,5 +1,6 @@
 <?php
-    require_once "../server/actions/actionsUser.php";
+    require_once "../../server/actions/actionsUser.php";
+    require_once "../../server/exception-handling/userExceptions.php";
     session_start();
 
     if (@$_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -13,14 +14,20 @@
                 header('location: /dashboard');
                 exit;
             }
-            catch (Exception $e){
+            catch (UserExceptions $e){
                 session_destroy();
+                $error_code = $e->getCode();
+                echo "<script>alert('usuário ou senha incoretos, por favor, tente novamente')</script>";
             }
         }
     }
     else if(@$_SESSION['logged']){
         header('location: /');
         exit;
+    }
+
+    if(@$error_code === UserExceptions::USER_NOT_FOUND){
+
     }
 ?>
 
@@ -38,17 +45,17 @@
         <h1 class="title">LOGIN</h1>
         <form class="form" action="." method="post">
             <label class='label' for='username'>    
+                <input type='text' class='input input_data' name='username' id='username' required />
                 <span>Nome: </span>
-                <input type='text' class='input input_data' name='username' id='username'  placeholder='nome de usuário'/>
             </label>
             <label class='label' for='password'>
+                <input type='password' class='input input_data' name='password' id='password' required />
                 <span>Senha: </span>
-                <input type='password' class='input input_data' name='password' id='password'  placeholder='••••••••'/>
             </label>
             <input type="submit" class="input input_submit" value="Entrar">
         </form>
         <footer class="container_footer">
-            ainda não possui cadastro? <a href="/register/" class="link">cadastrar-se</a>
+            ainda não possui cadastro? <a href="/auth/register/" class="link">cadastrar-se</a>
         </footer>
     </main>
 </body>
