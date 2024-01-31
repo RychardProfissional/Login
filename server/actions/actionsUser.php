@@ -21,11 +21,20 @@ class ActionUser {
     public static function register($name, $password, $levelAcess = 0){
         self::connect();
 
-        if(!!self::$user->read($name, $password)) {
+        $teste = self::$user->read($name, $password);
+        
+        if(!!$teste) {
             throw new UserExceptions("Usuário já existe", UserExceptions::USER_ALREADY_EXIST);
         }
+        echo "seila".$teste."seila";
 
         return self::$user->create($name, $password, $levelAcess);
+    }
+
+    public static function getInfoAll($id){
+        self::connect();
+
+        return self::$user->read(...['id'=> $id]);
     }
 
     private static function connect(){

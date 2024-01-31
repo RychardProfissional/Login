@@ -9,12 +9,12 @@ class User{
         $this->conn = $conn;
     }
 
-    public function create($name, $password, $levelAccess){
+    public function create($username, $password, $levelAccess){
         try {
-            $query = $this->conn->prepare("INSERT INTO user VALUES (null, :name, :password, :levelAccess)");
-            $query->bindParam(':name', $name, PDO::PARAM_STR);
+            $query = $this->conn->prepare("INSERT INTO users(`username`, `password`, `levelAccess`) VALUES (:username, :password, :levelAccess)");
+            $query->bindParam(':username', $username, PDO::PARAM_STR);
             $query->bindParam(':password', $password, PDO::PARAM_STR);
-            $query->bindParam(':levelAccess', $levelAccess, PDO::PARAM_STR);
+            $query->bindParam(':levelAccess', $levelAccess, PDO::PARAM_INT);
             
             $success = $query->execute();
 
@@ -30,12 +30,20 @@ class User{
         }
     }
 
-    public function read($username, $password, $column = '*') {
+    public function read($username = null, $password = null, $column = '*', $id = null) {
         try {
-            $query = $this->conn->prepare("SELECT :column FROM user WHERE username = :username AND password = :password");
-            $query->bindParam(':username', $username, PDO::PARAM_STR);
-            $query->bindParam(':password', $password, PDO::PARAM_STR);
-            $query->bindParam(':column', $column, PDO::PARAM_STR);
+            if(!in_array($column, ['*', 'username', 'password', 'id'])) {
+                throw new PDOException('invalid column');
+            }
+            if($id != null){
+                $query = $this->conn->prepare("SELECT * FROM users WHERE id = :id");
+                $query->bindParam(':id', $id, PDO::PARAM_INT);
+            }
+            else{
+                $query = $this->conn->prepare("SELECT $column FROM users WHERE username = :username AND password = :password");
+                $query->bindParam(':username', $username, PDO::PARAM_STR);
+                $query->bindParam(':password', $password, PDO::PARAM_STR);
+            }
             $query->execute();
 
             return $query->fetch(PDO::FETCH_ASSOC);

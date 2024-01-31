@@ -11,7 +11,7 @@
 
         if($username && $password){
             try{
-                $_SESSION['id'] = ActionUser::register($username, $password)['id'];
+                $_SESSION['id'] = ActionUser::register($username, $password);
                 $_SESSION['logged'] = true;
                 header('location: /dashboard');
                 exit;
@@ -19,7 +19,6 @@
             catch (UserExceptions $e){
                 session_destroy();
                 $error_code = $e->getCode();
-                echo "<script>alert(".$e->getMessage().")</script>";
             }
         }
     }
@@ -35,14 +34,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>register - Login com php</title>
-    <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="/css/auth.css">
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/auth.css">
     <script src="../../js/auth/register.js"></script>
+    <?php 
+        if(isset($error_code)){
+            echo "<script>alert(\"".$e->getMessage()."\")</script>";
+        }
+    ?>
 </head>
 <body>
     <main class="container">
         <h1 class="title">Cadastro</h1>
-        <form class="form" action="." method="post">
+        <form id="form" action="." method="post">
             <label class='label <?= $error_name ?? 'error_tmp'?>' for='username'>    
                 <input type='text' class='input input_data' name='username' id='username' required/>
                 <span>Nome: </span>
@@ -55,10 +59,10 @@
                 <input type='password' class='input input_data' id='password_repeat' required />
                 <span>Senha novamente: </span>
             </label>
-            <input type="submit" class="input input_submit" value="Cadastra-se">
+            <input type="submit" class="input" id="input_submit" value="Cadastra-se">
         </form>
         <footer class="container_footer">
-            já possui uma conta? <a href="/auth/login/" class="link">log-in</a>
+            já possui uma conta? <a href="../login/" class="link">log-in</a>
         </footer>
     </main>
 </body>
