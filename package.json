@@ -1,0 +1,18 @@
+{
+  "name": "login",
+  "version": "1.0.0",
+  "description": "Projeto feito com React.js e Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start:backend": "cd backend && npm start",
+    "start:frontend": "cd frontend && npm start",
+    "start": "concurrently \"npm start:backend\" \"npm start:frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Rychard Antony Pereira de Arruda",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
