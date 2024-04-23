@@ -1,9 +1,24 @@
+function validaEntradaDados({name, email, password}) {
+    if (User.checkUnique({email: email})) {
+        return {email: 'Email já existe!'}
+    }
+}
+
 function register(req, res) {
     const reqNewUser = req.body
 
+    var error = validaEntradaDados(reqNewUser)
+    if (!error) {
+        const newUser = User.create(reqNewUser)
 
-    const newUser = 0;
-    res.status(200).json({sucess: true, data: newUser})
+        if (newUser) {
+            res.status(200).json({sucess: true, data: newUser})
+        }
+
+        error = newUser.error
+    }
+
+    res.status(401).json({sucess: false, error: error})
 }
 
 function login(req, res) {
