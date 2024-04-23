@@ -1,39 +1,15 @@
 require('dotenv').config({ path: '.env.development' })
 
-const session = require('express-session')
-const express = require('express')
-const con = require('./conection')()
+const app = require('express')()
+const auth = require('./controllers/authController')
 
-con.connect((err) => {
-    if (err) throw err
-    console.log('Conexão com banco de dados feita com sucesso!!!')
-})
+// AUTENTICAÇÃO
+app.post("/auth/register", auth.register)
+app.post("/auth/login", auth.login)
+app.post("/auth/check", auth.check)
 
-const app = express()
+const PORT = parseInt(process.env.APP_PORT, 10) || 300
 
-app.use(session({
-    secret: process.env.SECRET_SESSION,
-    resave: false,
-    saveUninitialized: true,
-}))
-
-app.use(["/auth/login", "/auth/register"], (req, res, next) => {
-    const user = req.session.user
-    
-    if(user) {
-        res.send('hello world')
-    }  
-    else next()
-})
-
-app.post("/auth/login", (req, res) => {
-    res.send('logando...')
-})
-
-app.post("/auth/register", (req, res) => {
-    res.send('criando cadastro...')
-})
-
-app.listen(parseInt(process.env.APP_PORT, 10), () => {
-    console.log('teste')
+app.listen(PORT, () => {
+    console.log(`Servidor backend rodando na porta ${PORT}`)
 })

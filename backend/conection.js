@@ -1,5 +1,6 @@
-mysql = require('mysql')
 require('dotenv').config({ path: '.env.development' })
+
+mysql = require('mysql')
 
 function createConnDB() {
     return mysql.createConnection({
