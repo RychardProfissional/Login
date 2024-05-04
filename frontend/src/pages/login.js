@@ -17,7 +17,8 @@ export default function Login() {
             headers: {
               'Content-Type': 'application/json' 
             },
-            body: JSON.stringify({email, password})
+            credentials: 'include',
+            body: JSON.stringify({email, password}),
         }).then(res => {
             if (!res.ok) {
                 throw new Error('erro ao tentar fazer a solicitação')

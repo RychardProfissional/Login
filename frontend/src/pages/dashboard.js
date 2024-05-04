@@ -9,7 +9,10 @@ export default function Dashboard() {
     urlServer.pathname = '/auth/check'
 
     useEffect(() => {
-        fetch(urlServer.href).then(res => {
+        fetch(urlServer.href, 
+        {
+            credentials: 'include',
+        }).then(res => {
             if (!res.ok) {
                 throw new Error('erro ao tentar fazer a solicitação')
             }
@@ -20,7 +23,7 @@ export default function Dashboard() {
             console.error(error)
             navigate("/login")
         })
-    }, [])
+    }, [navigate])
 
     return(
         <main>
