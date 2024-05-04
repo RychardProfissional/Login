@@ -1,14 +1,14 @@
-require('dotenv').config({ path: '.env.development' })
+require('dotenv').config({ path: '../.env.development' })
 
-const app = require('express')()
-const auth = require('./controllers/authController')
+const express = require('express')
+const middlewares = require('./middlewares')
+const router = require('./router')
+const PORT = parseInt(process.env.SERVER_PORT, 10) || 300
 
-// AUTENTICAÇÃO
-app.post("/auth/register", auth.register)
-app.post("/auth/login", auth.login)
-app.post("/auth/check", auth.check)
+const app = express()
 
-const PORT = parseInt(process.env.APP_PORT, 10) || 300
+app.use(middlewares)
+app.use(router)
 
 app.listen(PORT, () => {
     console.log(`Servidor backend rodando na porta ${PORT}`)

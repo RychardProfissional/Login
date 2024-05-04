@@ -1,34 +1,38 @@
-function validaEntradaDados({name, email, password}) {
-    if (User.checkUnique({email: email})) {
-        return {email: 'Email já existe!'}
-    }
-}
+const User = require("../models/user")
 
 function register(req, res) {
-    const reqNewUser = req.body
-
-    var error = validaEntradaDados(reqNewUser)
-    if (!error) {
-        const newUser = User.create(reqNewUser)
-
-        if (newUser) {
-            res.status(200).json({sucess: true, data: newUser})
-        }
-
-        error = newUser.error
+    if (User.create(req.body)) {
+        req.session.logged = true
+        res.status(201).json({message: "Usuário cadastrado com sucesso"})
+        return
     }
-
-    res.status(401).json({sucess: false, error: error})
+    res.status(400).json({error: "Erro ao tentar cadastrar novo usuário"})
 }
 
 function login(req, res) {
-    const user = req.body
-    const userFound = {};
-    res.status(200).json({sucess: true, data: userFound})
+    if(true/* User.exist(req.body) */) {
+        req.session.logged = true
+        res.status(200).json({message: "Login efetuado com sucesso"})
+        return
+    }
+    
+    res.status(401).json({error: "Credenciais inválidas"})
 }
 
 function check(req, res) {
+    console.log(req.session)
+    console.log(req.session.logged)
+    if(req.session.logged) {
+        res.status(200).json({message: "O usuário está logado"})
+        return
+    }
 
+    res.status(401).json({error: "O usuário não esta logado"})
 }
 
-module.exports = {register, login, check}
+function logoff() {
+    res.session.logged = false
+    res.status(200).json({message: "O usuário foi deslogado"})
+}
+
+module.exports = {register, login, check, logoff}
