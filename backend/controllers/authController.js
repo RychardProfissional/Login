@@ -10,7 +10,7 @@ function register(req, res) {
 }
 
 function login(req, res) {
-    if(true/* User.exist(req.body) */) {
+    if(User.exist(req.body)) {
         req.session.logged = true
         res.status(200).json({message: "Login efetuado com sucesso"})
         return
@@ -20,8 +20,6 @@ function login(req, res) {
 }
 
 function check(req, res) {
-    console.log(req.session)
-    console.log(req.session.logged)
     if(req.session.logged) {
         res.status(200).json({message: "O usuário está logado"})
         return

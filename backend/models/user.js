@@ -1,4 +1,4 @@
-const DB = require("../conection")
+const DB = require("../connection")
 
 const User = {
     create({username, email, password, leveAccess = 0}) {
@@ -27,8 +27,7 @@ const User = {
         const sql = "SELECT `id` FROM `users` WHERE `email` = ? AND `password` = ?"
         DB.conn.query(sql, [email, password], (err, row) => {
             if (err) {
-                console.error("Erro ao tentar utilizar select na tabela", err)
-                return
+                console.error('', err)
             }
             e = !!row.lenght
         })
