@@ -20,8 +20,12 @@ export default function Login() {
             credentials: 'include',
             body: JSON.stringify({email, password}),
         }).then(res => {
-            if (!res.ok) {
-                throw new Error('erro ao tentar fazer a solicitação')
+            if (res.status === 401) {
+                alert('usuário ou senha invalidos')
+                throw new Error('Erro: Usuário ou senha invalidos')
+            }
+            else if (!res.ok) {
+                throw new Error('Erro: Impossivel realizar solicitação ao servidor')
             }
             return res.json()   
         }).then(res => {

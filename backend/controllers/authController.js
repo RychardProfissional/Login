@@ -1,22 +1,26 @@
 const User = require("../models/user")
 
 function register(req, res) {
-    if (User.create(req.body)) {
-        req.session.logged = true
-        res.status(201).json({message: "Usuário cadastrado com sucesso"})
-        return
-    }
-    res.status(400).json({error: "Erro ao tentar cadastrar novo usuário"})
+    User.create(req.body).then((r) => {
+        if (r) {
+            req.session.logged = true
+            res.status(201).json({message: "Usuário cadastrado com sucesso"})
+            return
+        }
+        res.status(400).json({error: "Erro ao tentar cadastrar novo usuário"})
+    })
 }
 
 function login(req, res) {
-    if(User.exist(req.body)) {
-        req.session.logged = true
-        res.status(200).json({message: "Login efetuado com sucesso"})
-        return
-    }
-    
-    res.status(401).json({error: "Credenciais inválidas"})
+    User.exist(req.body).then((r) => {
+        if(r) {
+            req.session.logged = true
+            res.status(200).json({message: "Login efetuado com sucesso"})
+            return
+        }
+        
+        res.status(401).json({error: "Credenciais inválidas"})
+    })
 }
 
 function check(req, res) {
@@ -28,9 +32,13 @@ function check(req, res) {
     res.status(401).json({error: "O usuário não esta logado"})
 }
 
-function logoff() {
-    res.session.logged = false
-    res.status(200).json({message: "O usuário foi deslogado"})
+function logoff(req, res) {
+    res.session.destroy((err) => {
+        if (err) {
+            console.error(err)
+        }
+    })
+    res.redirect('/')
 }
 
 module.exports = {register, login, check, logoff}
